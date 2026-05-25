@@ -15,7 +15,7 @@
 
 3. [¿Cuáles son los verbos de API?](#3-verbos-de-apis-en-python)
 
-4. [¿Es MongoDB una base de datos SQL o NoSQL?](#4-mongodb)
+4. [¿Es MongoDB una base de datos SQL o NoSQL?](#4-base-de-datos-mongodb)
 
 5. [¿Qué es una API?](#5-que-es-una-api)
 
@@ -29,15 +29,15 @@
 
 
 
-## 1. Clases en Python
+# 1. Clases en Python
 
 Una clase es una plantilla o molde que define cómo se creará un objeto. Permiten empaquetar datos (atributos) y comportamientos (métodos) juntos, lo que facilita la creación de objetos.
 
-### ⚙️ Sintaxis Básica
+## ⚙️ Sintaxis Básica
 
 En Python, definimos una clase usando la palabra reservada class seguida del nombre en mayúscula (CamelCase) y dos puntos (:). Todo lo que pertenece a la clase va indentado (con cuatro espacios) debajo.
 
-### 🔧 ¿Para qué las usamos?
+## 🔧 ¿Para qué las usamos?
 
 Las usamos principalmente para organizar el código y aplicar un concepto llamado Programación Orientada a Objetos (POO). Sus mayores ventajas son:
 
@@ -47,7 +47,7 @@ Las usamos principalmente para organizar el código y aplicar un concepto llamad
 
 - Modelar el mundo real: Hacen que el código sea más fácil de entender porque programamos pensando en "cosas" (usuarios, productos, enemigos, facturas) en lugar de solo líneas de texto sueltas.
 
-### 📋 Conceptos Claves
+## 📋 Conceptos Claves
 
 - **Constructor (__init__):** 
 Es un método especial que se ejecuta automáticamente cuando creas un objeto a partir de la clase. Se utiliza para asignar los valores iniciales a los atributos.
@@ -96,11 +96,11 @@ Pensalo como una ficha de registro:
 
 No tienen que llamarse igual, pero se hace por convención para que quede claro que son el mismo dato.
 
-## 2. Métodos en Python
+# 2. Métodos en Python
 
 El método que se ejecuta automáticamente cuando se crea una instancia de una clase es __init__ (abreviación de initialize o inicializar en inglés). En el mundo de la programación, a este tipo de funciones especiales se les conoce como "Constructores".
 
-### 🔧 ¿Para qué se utiliza?
+## 🔧 ¿Para qué se utiliza?
 
 Su función principal es inicializar los atributos y preparar el estado inicial del objeto.
 
@@ -115,7 +115,7 @@ El método __init__ se utiliza para:
 ⚙️ Sintaxis y Estructura
 En Python, este método se reconoce porque lleva dos guiones bajos antes y dos después (__init__). Esto le indica a Python que es un método especial ("método mágico") con un comportamiento interno propio.
 
-### Sintaxis
+## Sintaxis
 ```python
 class NombreClase:
     def __init__(self, parametro1, parametro2):
@@ -139,11 +139,11 @@ mi_movil = Movil("Iphone", "12 mini")
 cuando escribís `Movil("Iphone", "12 mini")`.
 
 
-## 3. Verbos de APIs en Python
+# 3. Verbos de APIs en Python
 
 Las APIs REST son fundamentales en el desarrollo de software moderno. Para interactuar con ellas, utilizamos los **verbos HTTP**, que permiten definir el tipo de acción que queremos realizar sobre los recursos de la API.
 
-### ¿Qué son los verbos HTTP?
+## ¿Qué son los verbos HTTP?
  
 Los verbos HTTP (también llamados métodos HTTP) indican la acción que se desea realizar sobre un recurso en una API. En una API REST, los recursos suelen representarse como URLs.
 Por ejemplo, en una API que gestiona recetas de cocina, el recurso principal sería:
@@ -157,7 +157,7 @@ Los verbos HTTP nos permiten:
 - Actualizar un recurso existente (PUT o PATCH)
 - Eliminar un recurso (DELETE)
 
-### Verbos HTTP más utilizados en APIs REST
+## Verbos HTTP más utilizados en APIs REST
 
  1. **GET – Obtener recursos**
  El método **GET** se usa para recuperar información de la API.
@@ -284,3 +284,138 @@ Lo que hace paso a paso:
 - Guarda los cambios (commit)
 - Devuelve un mensaje JSON confirmando la acción. Es el método más limpio, ya que no necesita un cuerpo de datos, solo apuntar al ID correcto.
 
+
+# 4. Base de datos MongoDB
+---
+## ¿Qué es MongoDB?
+
+**MongoDB** es una base de datos **no relacional** (también llamada **NoSQL**), y más concretamente del tipo **orientada a documentos**. 
+> En lugar de guardar los datos en tablas con filas y columnas, los guarda en **documentos** con formato similar a JSON, llamados BSON.
+
+## ¿Cómo funciona MongoDB?##
+
+Para entenderlo, pensá en cómo guardás la información en carpetas de tu ordenador usando archivos de texto editables.
+
+MongoDB utiliza el formato BSON (que es una versión binaria de JSON, el estándar de la web). Si alguna vez has visto un JSON, se estructura con pares de clave: valor.
+
+### Jerarquía básica
+ 
+| Concepto | Equivalente en SQL | Descripción |
+|---|---|---|
+| **Documento** | Fila | El registro individual |
+| **Colección** | Tabla | El grupo donde se guardan los documentos |
+
+Así se vería un documento:
+```json
+{
+  "_id": "64f1a2b3c4d5e6f7a8b9c012",
+  "nombre": "Carlos",
+  "edad": 28,
+  "hobbies": ["fútbol", "videojuegos"],
+  "direccion": {
+    "ciudad": "Madrid",
+    "pais": "España"
+  }
+}
+```
+> 💡 Fijate que el documento puede tener **listas**, **objetos anidados** y campos distintos entre documentos. No hay una estructura rígida obligatoria.
+
+
+---
+ 
+## Características principales
+
+- **🔓 Esquema flexible** - Cada documento puede tener campos diferentes. No estás obligado a seguir una estructura rígida, lo que facilita la evolución de tu aplicación.
+- **⚡ Alto rendimiento y escalabilidad** - Está diseñada para manejar grandes volúmenes de información y cargas de trabajo masivas.
+- **🔎 Lenguaje de consultas enriquecido** - A pesar de ser no relacional, permite realizar consultas complejas, filtrado y agregación de datos.
+- **🚀 Baja latencia** - Ideal para aplicaciones web, móviles, e-commerce y redes sociales que requieren respuestas en tiempo real.
+
+## La gran batalla: SQL vs. NoSQL
+
+Para entender por qué existe MongoDB, hay que compararlo con el modelo tradicional (SQL).
+
+### Bases de Datos SQL (Relacionales)
+
+> Son las de toda la vida: **MySQL**, **PostgreSQL** o **SQL Server**.
+
+- **Cómo funcionan:** Organizan los datos en tablas con filas y columnas fijas. Las tablas se "relacionan" entre sí mediante llaves o identificadores.
+- **Su punto fuerte:** Son increíblemente organizadas y seguras para transacciones complejas (como un sistema bancario).
+- **Su talón de Aquiles:** Son inflexibles. Añadir una nueva columna a una tabla con millones de registros puede convertirse en un problema serio.
+---
+
+### Bases de datos NoSQL (No Relacionales)
+
+> Aquí es donde entra **MongoDB**. Nacieron para resolver los problemas de rigidez y escalabilidad de la era de internet.
+ 
+- **Cómo funcionan:** No usan tablas. Pueden usar documentos (como MongoDB), grafos, o sistemas clave-valor.
+- **Su punto fuerte:** Son **flexibles** y escalan **horizontalmente** sin fricción —es muy fácil repartir los datos en muchos servidores si tu aplicación crece de golpe—.
+---
+
+### Comparativa rápida
+ 
+| | **SQL (Relacional)** | **NoSQL (No Relacional)** |
+|---|---|---|
+| **Ejemplos** | MySQL, PostgreSQL | MongoDB, Redis, Cassandra |
+| **Estructura** | Tablas con filas y columnas | Documentos, clave-valor, grafos… |
+| **Esquema** | Fijo, definido antes de usar | Flexible, puede cambiar |
+| **Relaciones** | JOINs entre tablas | Datos anidados o referencias |
+| **Escalado** | Vertical (más potencia al servidor) | Horizontal (más servidores) |
+| **Ideal para** | Datos muy estructurados y relacionados | Datos variables, gran volumen, velocidad |
+ 
+---
+
+## ¿Cuándo usar cada una?
+ 
+**✅ Usá SQL cuando:**
+- Los datos tienen muchas relaciones entre sí (ej. pedidos → clientes → productos)
+- Necesitás consistencia y transacciones seguras (banca, contabilidad)
+**✅ Usá MongoDB cuando:**
+- Los datos cambian de estructura frecuentemente
+- Necesitás escalar rápido con mucho volumen (redes sociales, catálogos)
+- Los datos se leen más de lo que se relacionan entre sí
+---
+ 
+> **En resumen:** MongoDB te da **flexibilidad y velocidad** a cambio de renunciar a la rigidez estructurada del mundo relacional. Ninguna es mejor en absoluto — depende del problema que quieras resolver.
+
+---
+
+# 5. ¿Qué es una API?
+
+Una API (por sus siglas en inglés, Application Programming Interface) o Interfaz de Programación de Aplicaciones, es un conjunto de reglas que permite que diferentes programas o aplicaciones se comuniquen entre sí. Actúa como un **puente o intermediario**, permitiendo que un sistema solicite datos o funciones a otro de forma automática y segura.
+
+## La analogía del restaurante 🍽️
+Imaginá que estás en un restaurante:
+
+- Vos sos la aplicación que quiere algo (el cliente).
+- La cocina es el sistema que tiene lo que necesitás (el servidor / base de datos).
+- El camarero es la API — el intermediario que lleva tu pedido, lo comunica a la cocina, y trae la respuesta de vuelta.
+
+💡 Vos nunca entrás a la cocina. No sabés cómo funciona por dentro. Solo le decís al camarero qué querés, y él se encarga del resto.
+
+### 📱 ¿Cómo funciona en la práctica?
+Cuando abrís una app del tiempo y ves la temperatura de tu ciudad, esto es lo que ocurre por detrás:
+
+- ➡️ Tu app le manda una petición (**request**) a una API → "Dame el clima de Bilbao". 
+- 🔎 La API busca esa información en su servidor
+- ⬅️ La API te devuelve una respuesta (**response**) → generalmente en formato JSON
+
+```json
+{
+  "ciudad": "Bilbao",
+  "temperatura": 18,
+  "estado": "lluvia"
+}
+```
+
+### ¿Por qué son tan importantes para un programador?
+
+Las APIs son los bloques de construcción del software moderno por tres razones principales:
+
+- **No reinventas la rueda:** Si estás creando una app de reparto de comida, no vas a programar un mapa desde cero. Usas la API de Google Maps.
+
+- **Seguridad:** Permiten compartir funciones o datos sin enseñar cómo está hecho tu código por dentro ni exponer tu base de datos directamente al público.
+
+- **Separación de tareas:** Permiten que el equipo de Frontend (los que hacen la interfaz visual en React, HTML, etc.) trabaje de forma independiente al equipo de Backend (los que programan la lógica y las bases de datos en Flask, Node.js, etc.). Ambos mundos se unen gracias a la API.
+
+### 📌 En Resumen
+Una API es una herramienta que te permite conectar sistemas, usar herramientas de otros creadores en tu propia aplicación, y estructurar tu código de forma limpia y profesional.
