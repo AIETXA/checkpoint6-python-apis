@@ -19,7 +19,7 @@
 
 5. [¿Qué es una API?](#5-que-es-una-api)
 
-6. [¿Qué es Postman?](#6-postman)
+6. [¿Qué es Postman?](#6-postman-el-laboratorio-de-pruebas-de-APIs)
 
 7. [¿Qué es el polimorfismo?](#7-que-es-el-polimorfismo)
 
@@ -418,4 +418,74 @@ Las APIs son los bloques de construcción del software moderno por tres razones 
 - **Separación de tareas:** Permiten que el equipo de Frontend (los que hacen la interfaz visual en React, HTML, etc.) trabaje de forma independiente al equipo de Backend (los que programan la lógica y las bases de datos en Flask, Node.js, etc.). Ambos mundos se unen gracias a la API.
 
 ### 📌 En Resumen
+
 Una API es una herramienta que te permite conectar sistemas, usar herramientas de otros creadores en tu propia aplicación, y estructurar tu código de forma limpia y profesional.
+
+
+# 6. Postman: el laboratorio de pruebas de APIs
+
+**Postman** es, sin duda, la herramienta estrella para cualquiera que trabaje desarrollando o consumiendo APIs. Si estás construyendo tu propio backend o necesitas usar datos de un servicio externo, Postman va a ser tu mejor amigo. 
+
+💡Importante: Es **gratuito** y se descarga como **aplicación de escritorio**.
+
+## ¿Qué es Postman? 
+
+**Postman** es una herramienta visual que te permite probar APIs sin necesidad de escribir código. Funciona como un laboratorio de pruebas para APIs.
+
+Imaginá que estás programando el backend de tu aplicación con Python y Flask, y creas una ruta para que los usuarios puedan registrarse. En una situación normal, para probar si esa ruta funciona, tendrías que programar también la pantalla del frontend (el formulario en HTML/CSS), escribir los datos, hacer clic en el botón y ver qué pasa.
+
+Postman existe para evitarte todo ese trabajo. Te permite simular ser el frontend y enviar peticiones directas a tu backend para comprobar si responde correctamente.
+
+## ¿Para qué sirve? (Sus 3 usos principales)
+
+- 💉 **Probar APIs (Testing)**
+Te permite enviar peticiones (`requests`) a cualquier URL y analizar minuciosamente la respuesta (`response`). Puedes ver qué datos te devuelve, en qué formato (generalmente JSON), cuánto tarda en responder y si el código de estado es el correcto (como un 200 OK o un 404 Not Found).
+
+- 🔧 **Diseñar y Desarrollar APIs**
+Mientras estás escribiendo el código de tu servidor, utilizas Postman para asegurarte de que cada "ruta" o endpoint hace exactamente lo que querés antes de conectarla con la interfaz visual.
+
+- 📁 **Documentar y Organizar (Colecciones)**
+Postman te permite guardar tus peticiones en carpetas llamadas Collections (Colecciones). Si tu aplicación tiene 20 rutas diferentes (para usuarios, para productos, para el carrito), podés guardarlas todas organizadas. Incluso podés compartir esa colección con otros programadores para que sepan cómo usar tu API.
+
+## ¿Cómo funciona Postman?
+
+El funcionamiento de Postman replica exactamente el flujo de Petición ➡️ Respuesta que viste al estudiar las APIs, pero ofreciéndote una interfaz gráfica muy cómoda.
+
+### Veamos cómo se ve en la práctica:
+
+Para este ejemplo haremos una búsqueda del siguiente link de muestra que nos ofrece la plataforma web: https://postman-echo.com/get
+
+Para probarlo tú mismo, realizaremos los siguientes pasos:
+
+- Selecciona el método **GET** en el menú desplegable que se encuentra a la izquierda de la barra de búsqueda.
+
+- Coloca la URL de prueba (https://postman-echo.com/get) en el panel de búsqueda superior.
+
+- Presiona el botón azul **Send** ubicado a la derecha.
+
+💡 Tip: Si deseas guardar esta configuración para no tener que escribirla de nuevo en el futuro, puedes presionar el botón **Save** que se encuentra en la parte superior derecha.
+
+![request](img/image.png)
+
+**Analizando la Respuesta**
+
+Una vez que presionas Send, la mitad inferior de Postman cobrará vida y te mostrará el resultado del servidor. En esa zona deberás buscar tres datos fundamentales:
+
+- El **JSON de respuesta** (con colores y sangrías para que se lea fácil).
+
+- El **Status Code** (el número que indica si todo salió bien o hubo un error).
+
+- El **Tiempo de respuesta** (útil para ver si tu base de datos o tu código están yendo lentos).
+
+![response](img/image-1.png)
+
+### 📌 La Analogía Final
+
+Si dijimos que una API es el camarero de un restaurante que lleva los pedidos de la mesa a la cocina...
+
+Postman es un cliente de pruebas experto. Es una persona que se sienta en la mesa con un cuaderno, le pide cosas rarísimas al camarero de todas las formas posibles (le pide platos sin sal, menús de postres, intenta pedir cosas que no están en la carta) para comprobar si el camarero hace bien su trabajo y si la cocina responde correctamente a cada situación.
+
+## En resumen: 
+
+**Postman** es el entorno de pruebas de las APIs. Así como usás el navegador para probar una web, usás Postman para probar una API.
+
