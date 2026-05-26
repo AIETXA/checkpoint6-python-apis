@@ -9,23 +9,23 @@
 
 ## 📄Tabla de contenidos:
 
-1. [¿Para qué usamos Clases en Python?](#1-clases-en-python)
+[¿Para qué usamos Clases en Python?](#1-clases-en-python)
 
-2. [¿Qué método se ejecuta automáticamente cuando se crea una instancia de una clase?](#2-metodos-en-python)
+[¿Qué método se ejecuta automáticamente cuando se crea una instancia de una clase?](#2-metodos-en-python)
 
-3. [¿Cuáles son los verbos de API?](#3-verbos-de-apis-en-python)
+[¿Cuáles son los verbos de API?](#3-verbos-de-apis-en-python)
 
-4. [¿Es MongoDB una base de datos SQL o NoSQL?](#4-base-de-datos-mongodb)
+[¿Es MongoDB una base de datos SQL o NoSQL?](#4-base-de-datos-mongodb)
 
-5. [¿Qué es una API?](#5-que-es-una-api)
+[¿Qué es una API?](#5-qué-es-una-api)
 
-6. [¿Qué es Postman?](#6-postman-el-laboratorio-de-pruebas-de-APIs)
+[¿Qué es Postman?](#6-postman-el-laboratorio-de-pruebas-de-APIs)
 
-7. [¿Qué es el polimorfismo?](#7-que-es-el-polimorfismo)
+[¿Qué es el polimorfismo?](#7-qué-es-el-polimorfismo)
 
-8. [¿Qué es un método dunder?](#8-metodo-dunder)
+[¿Qué es un método dunder?](#8-métodos-dunder)
 
-9. [¿Qué es un decorador de python?](#9-decoradores-en-python)
+[¿Qué es un decorador de python?](#9-decoradores-en-python)
 
 
 
@@ -96,6 +96,7 @@ Pensalo como una ficha de registro:
 
 No tienen que llamarse igual, pero se hace por convención para que quede claro que son el mismo dato.
 
+
 # 2. Métodos en Python
 
 El método que se ejecuta automáticamente cuando se crea una instancia de una clase es __init__ (abreviación de initialize o inicializar en inglés). En el mundo de la programación, a este tipo de funciones especiales se les conoce como "Constructores".
@@ -106,7 +107,7 @@ Su función principal es inicializar los atributos y preparar el estado inicial 
 
 Imagínate que la clase es el molde para fabricar teléfonos móviles. No queremos que todos los teléfonos salgan de la fábrica vacíos; necesitamos que cada uno tenga su propio número de serie, color y modelo desde el momento en que se fabrican.
 
-El método __init__ se utiliza para:
+El método **__init__** se utiliza para:
 
 - Darle vida al objeto con datos iniciales: Configura las características únicas de cada instancia en el segundo exacto en que nace.
 
@@ -116,6 +117,7 @@ El método __init__ se utiliza para:
 En Python, este método se reconoce porque lleva dos guiones bajos antes y dos después (__init__). Esto le indica a Python que es un método especial ("método mágico") con un comportamiento interno propio.
 
 ## Sintaxis
+
 ```python
 class NombreClase:
     def __init__(self, parametro1, parametro2):
@@ -124,6 +126,7 @@ class NombreClase:
 ```
 
 ### Ejemplo
+
 ```python
 class Movil:
     def __init__(self, marca, modelo):
@@ -489,3 +492,269 @@ Postman es un cliente de pruebas experto. Es una persona que se sienta en la mes
 
 **Postman** es el entorno de pruebas de las APIs. Así como usás el navegador para probar una web, usás Postman para probar una API.
 
+
+# 7. ¿Qué es el polimorfismo?
+
+El polimorfismo es uno de los pilares fundamentales de la Programación Orientada a Objetos (POO). La palabra viene del griego poly (muchos) y morphé (formas), y en programación significa la capacidad de que diferentes clases tengan métodos con el mismo nombre pero con comportamientos distintos.
+
+En Python, el polimorfismo es especialmente flexible y natural gracias al Duck Typing (tipado dinámico), que se resume en la famosa frase: "Si camina como un pato y grazna como un pato, entonces es un pato". A Python no le importa el tipo de objeto que sea, sino lo que ese objeto puede hacer.
+
+## Formas de aplicar polimorfismo en Python
+
+**Hay 3 formas principales:**
+
+1. Con funciones (la más simple) -> Distintos objetos, mismo método:
+
+```python
+class Perro:
+    def sonido(self):
+        return "¡Guau!"
+
+class Gato:
+    def sonido(self):
+        return "¡Miau!"
+
+def hacer_sonido(animal):
+    print(animal.sonido())
+
+hacer_sonido(Perro())  # ¡Guau!
+hacer_sonido(Gato())   # ¡Miau!
+
+```
+> La función hacer_sonido no sabe qué animal recibe, simplemente llama a sonido().
+
+2. Con herencia -> Un padre define el método, los hijos lo sobreescriben:
+
+```python
+class Animal:
+    def sonido(self):
+        return "..."
+
+class Perro(Animal):
+    def sonido(self):
+        return "¡Guau!"
+
+class Gato(Animal):
+    def sonido(self):
+        return "¡Miau!"
+
+```
+> Todos heredan de Animal, pero cada uno responde diferente. Esto se llama sobrescritura de métodos (method overriding).
+
+3. Con duck typing -> Python no exige que los objetos compartan una clase padre. Si tiene el método, funciona — eso es **duck typing**.
+> `"Si camina como un pato y habla como un pato, es un pato."`
+
+```python
+class Robot:
+    def hablar(self):
+        return "Bip bop"
+
+class Persona:
+    def hablar(self):
+        return "Hola!"
+
+# No heredan de nada en común, pero funciona igual
+for obj in [Robot(), Persona()]:
+    print(obj.hablar())
+```
+> Python no verifica el tipo, solo verifica si el método existe.
+
+### ¿Por qué es útil?
+
+💡 Ventaja clave: Te permite escribir código más limpio, flexible y mantenible. Si en el futuro decides añadir una clase Pájaro con el método sonido(), la función hacer_sonido() seguirá funcionando perfectamente sin necesidad de modificar una sola línea de su código.
+
+
+# 8. Métodos dunder
+
+Un método dunder (abreviatura en inglés de double underscore, o doble guion bajo) es un método especial en Python cuyo nombre comienza y termina con dos guiones bajos (por ejemplo, `__init__` o `__str__`).
+También se les conoce como métodos mágicos, y sirven para definir cómo deben comportarse tus objetos ante operaciones nativas de Python (como sumarlos, imprimirlos en pantalla o medir su longitud).
+Son la base del polimorfismo en Python, ya que permiten que objetos distintos respondan igual ante las mismas operaciones.
+
+
+## ¿Cómo funcionan? (El "detrás de escena")
+
+Tú no sueles llamar a estos métodos directamente escribiendo `objeto.__str__()`. En su lugar, Python los invoca automáticamente por debajo cuando usas ciertos operadores o funciones nativas.
+
+Por ejemplo, cuando haces una suma con el operador +, Python busca el método dunder `__add__`:
+
+| Lo que tú escribes | Lo que Python hace por detrás |
+|---|---|
+| `objeto1 + objeto2` | `objeto1.__add__(objeto2)` |
+| `len(objeto)` | `objeto.__len__()` |
+| `print(objeto)` | `objeto.__str__()` |
+| `objeto[0]` | `objeto.__getitem__(0)` |
+
+
+## Métodos dunder más comunes
+
+### Ciclo de vida del objeto
+| Método | Cuándo se usa |
+|---|---|
+| `__init__` | Al inicializar los atributos del objeto('El Constructor') |
+| `__del__` | Al destruir el objeto |
+
+### Representación
+| Método | Cuándo se usa |
+|---|---|
+| `__str__` | `print(objeto)` — para humanos |
+| `__repr__` | Representación técnica, para debugging |
+
+### Operadores matemáticos
+| Método | Cuándo se usa |
+|---|---|
+| `__add__` | `objeto + otro` |
+| `__sub__` | `objeto - otro` |
+| `__mul__` | `objeto * otro` |
+| `__truediv__` | `objeto / otro` |
+
+### Comparación
+| Método | Cuándo se usa |
+|---|---|
+| `__eq__` | `objeto == otro` |
+| `__lt__` | `objeto < otro` |
+| `__gt__` | `objeto > otro` |
+
+### Contenedores
+| Método | Cuándo se usa |
+|---|---|
+| `__len__` | `len(objeto)` |
+| `__getitem__` | `objeto[0]` |
+| `__contains__` | `x in objeto` |
+
+### Llamable
+| Método | Cuándo se usa |
+|---|---|
+| `__call__` | `objeto()` — hace que el objeto se comporte como una función |
+
+
+**Ejemplos prácticos:**
+```python
+# El constructor: inicializa los atributos del objeto
+class Producto:
+    def __init__(self, nombre, precio):
+        self.nombre = nombre
+        self.precio = precio
+
+    # Para que print(producto) muestre algo bonito
+    def __str__(self):
+        return f"{self.nombre} (${self.precio})"
+
+    # Para poder comparar si dos productos son iguales por su precio
+    def __eq__(self, otro):
+        if isinstance(otro, Producto):
+            return self.precio == otro.precio
+        return False
+
+    # Para poder sumar el precio de dos productos directamente
+    def __add__(self, otro):
+        return self.precio + otro.precio
+
+# Probando nuestra clase "mágica"
+p1 = Producto("Café", 5)
+p2 = Producto("Galletas", 3)
+p3 = Producto("Té", 5)
+
+print(p1)          # Invoca __str__ -> Imprime: Café ($5)
+print(p1 == p3)    # Invoca __eq__  -> Imprime: True (cuestan lo mismo)
+print(p1 + p2)     # Invoca __add__ -> Imprime: 8
+
+```
+> Los más usados del día a día son `__init__`, `__str__`, `__repr__`, `__len__` y `__eq__`.
+
+
+
+# 9. ¿Qué es un decorador de Python?
+
+Un decorador es una función que envuelve a otra función para añadirle comportamiento extra, sin modificar su código original.
+
+> 💡 Analogía simple:
+Imagina que un decorador es como la funda impermeable de un teléfono: el teléfono sigue haciendo exactamente lo mismo (llamar, navegar, jugar), pero ahora, gracias a la funda, tiene el "superpoder" de ser resistente al agua sin haber alterado sus circuitos internos.
+
+## El secreto detrás de los decoradores
+
+Para entender los decoradores, primero hay que saber que en Python las funciones son objetos de primera clase. Esto significa que:
+
+- Puedes pasar una función como argumento a otra función.
+
+- Una función puede devolver otra función como su resultado.
+
+### Estructura básica de un decorador
+
+Un decorador se define como una función que recibe una función (func), crea una función interna (envoltura o wrapper) que añade la lógica extra, y finalmente devuelve esa función interna.
+
+**Ejemplo sin decorador:**
+```python
+def saludar():
+    print("¡Hola!")
+
+saludar()  # → ¡Hola!
+```
+
+**Ahora con un decorador que añade un mensaje antes y después:**
+
+```python
+def mi_decorador(func):
+    def envoltura():
+        print("1. Algo que se hace ANTES de ejecutar la función.")
+        func()  # Aquí se ejecuta la función original
+        print("2. Algo que se hace DESPUÉS de ejecutar la función.")
+    return envoltura
+
+@mi_decorador
+def saludar():
+    print("¡Hola!")
+
+saludar()    
+
+# Resultado en consola:
+# 1. Algo que se hace ANTES de ejecutar la función.
+# ¡Hola!
+# 2. Algo que se hace DESPUÉS de ejecutar la función.
+```
+
+> 💡 ¿Qué es el @? El `@mi_decorador` es azúcar sintáctica (una forma más bonita de escribir código). Es exactamente lo mismo que escribir de forma manual: `saludar = mi_decorador(saludar)`.
+
+## 🚀 ¿Qué pasa si la función original recibe argumentos?
+
+El decorador básico que vimos arriba solo funciona para funciones que no reciben ningún parámetro. Si intentamos decorar una función que recibe un nombre, por ejemplo, `def saludar(nombre):`, Python nos dará un error.
+
+Para que nuestro decorador sea universal y sirva para cualquier función, usamos `*args` (para argumentos posicionales) y `**kwargs` (para argumentos con nombre).
+
+Mira cómo cambia el decorador para aceptar parámetros:
+
+```python
+def mi_decorador_universal(func):
+    # Ponemos *args y **kwargs para que la envoltura atrape CUALQUIER argumento
+    def envoltura(*args, **kwargs):
+        print("1. Algo antes...")
+        
+        # Le pasamos esos mismos argumentos a la función original
+        resultado = func(*args, **kwargs)
+        
+        print("2. Algo después...")
+        return resultado # Retornamos el resultado por si la función devuelve algo
+    return envoltura
+
+@mi_decorador_universal
+def saludar_persona(nombre, saludo="¡Hola!"):
+    print(f"   {saludo}, {nombre}. ¿Cómo estás?")
+
+# ¡Ahora funciona perfectamente con argumentos!
+saludar_persona("Carlos", saludo="Buenas tardes")
+
+
+#Resultado en consola
+# 1. Algo antes...
+# Buenas tardes, Carlos. ¿Cómo estás?
+# 2. Algo después...
+```
+
+### ¿Por qué son tan útiles?
+
+💡Casos de uso comunes: Los decoradores son una de las herramientas más potentes de Python. Se usan constantemente para:
+
+- **Autenticación y seguridad:** Verificar si un usuario ha iniciado sesión antes de mostrarle una página web (muy usado en Flask o Django).
+
+- **Logging:** Guardar un registro de qué funciones está tocando un usuario.
+
+- **Caché:** Guardar el resultado de operaciones pesadas para no tener que repetirlas si se piden los mismos datos.
