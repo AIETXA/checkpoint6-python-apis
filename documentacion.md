@@ -17,7 +17,7 @@
 [¿Qué es Postman?](#6-postman-el-laboratorio-de-pruebas-de-apis)
 [¿Qué es el polimorfismo?](#7-qué-es-el-polimorfismo)
 [¿Qué es un método dunder?](#8-métodos-dunder)
-[¿Qué es un decorador de python?](#9-¿qué-es-un-decorador-de-python)
+[¿Qué es un decorador de python?](#9-decoradores-en-python)
 
 
 
@@ -31,7 +31,7 @@ En Python, defines una clase usando la palabra reservada `class` seguida del nom
 
 ```python
 class NombreClase:
-    # aquí van los atributos y métodos
+    #Aquí van los atributos y métodos
     pass
 ```
 
@@ -641,7 +641,7 @@ Por ejemplo, cuando haces una suma con el operador +, Python busca el método du
 | Método | Cuándo se usa |
 |---|---|
 | `__init__` | Al inicializar los atributos del objeto('El Constructor') |
-| `__del__` | Al destruir el objeto |
+| `__del__` | Al destruir el objeto. Importante!: Python decide cuándo llamarlo, no el programador|
 
 ### Representación
 | Método | Cuándo se usa |
@@ -688,7 +688,7 @@ class Producto:
 
     # Para que print(producto) muestre algo legible
     def __str__(self):
-        return f"{self.nombre} (${self.precio})"
+        return f"{self.nombre} ({self.precio}€)"
 
     # Para comparar si dos productos tienen el mismo precio
     def __eq__(self, otro):
@@ -705,7 +705,7 @@ p1 = Producto("Café", 5)
 p2 = Producto("Galletas", 3)
 p3 = Producto("Té", 5)
 
-print(p1)          # Invoca __str__ -> Imprime: Café ($5)
+print(p1)          # Invoca __str__ -> Imprime: Café (5€)
 print(p1 == p3)    # Invoca __eq__  -> Imprime: True (cuestan lo mismo)
 print(p1 + p2)     # Invoca __add__ -> Imprime: 8
 
