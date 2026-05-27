@@ -10,7 +10,7 @@
 ## 📄Tabla de contenidos:
 
 [¿Para qué usamos Clases en Python?](#1-clases-en-python)
-[¿Qué método se ejecuta automáticamente cuando se crea una instancia de una clase?](#2-el-método-constructor-init)
+[¿Qué método se ejecuta automáticamente cuando se crea una instancia de una clase?](#2-el-método-constructor-`init`)
 [¿Cuáles son los verbos de API?](#3-verbos-de-apis-en-python)
 [¿Es MongoDB una base de datos SQL o NoSQL?](#4-base-de-datos-mongodb)
 [¿Qué es una API?](#5-qué-es-una-api)
