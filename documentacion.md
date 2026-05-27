@@ -10,7 +10,7 @@
 ## 📄Tabla de contenidos:
 
 [¿Para qué usamos Clases en Python?](#1-clases-en-python)
-[¿Qué método se ejecuta automáticamente cuando se crea una instancia de una clase?](#2-métodos-en-python)
+[¿Qué método se ejecuta automáticamente cuando se crea una instancia de una clase?](#2-el-método-constructor-init)
 [¿Cuáles son los verbos de API?](#3-verbos-de-apis-en-python)
 [¿Es MongoDB una base de datos SQL o NoSQL?](#4-base-de-datos-mongodb)
 [¿Qué es una API?](#5-qué-es-una-api)
@@ -110,7 +110,7 @@ class Coche:
  
 ---
 
-# 2. Métodos en Python
+# 2. El método constructor `__init__`
 
 El método que se ejecuta automáticamente cuando se crea una instancia de una clase es `__init__` (abreviación de *initialize*, inicializar en español). En el mundo de la programación, a este tipo de funciones especiales se les conoce como **constructores**.
 
@@ -491,13 +491,13 @@ Postman existe para evitarte todo ese trabajo. Te permite **simular ser el front
 
 ## ¿Para qué sirve? (Sus 3 usos principales)
 
-- 💉 **Probar APIs (Testing)**
+- 💉 **Probar APIs (Testing)**: 
 Te permite enviar peticiones (`requests`) a cualquier URL y analizar minuciosamente la respuesta (`response`). Puedes ver qué datos te devuelve, en qué formato (generalmente JSON), cuánto tarda en responder y si el código de estado es el correcto (como un 200 OK o un 404 Not Found).
 
-- 🔧 **Diseñar y Desarrollar APIs**
+- 🔧 **Diseñar y Desarrollar APIs**: 
 Mientras estás escribiendo el código de tu servidor, utilizas Postman para asegurarte de que cada "ruta" o endpoint hace exactamente lo que querés antes de conectarla con la interfaz visual.
 
-- 📁 **Documentar y Organizar (Colecciones)**
+- 📁 **Documentar y Organizar (Colecciones)**: 
 Postman te permite guardar tus peticiones en carpetas llamadas Collections (Colecciones). Si tu aplicación tiene 20 rutas diferentes (para usuarios, para productos, para el carrito), podés guardarlas todas organizadas. Incluso puedes compartir esa colección con otros programadores para que sepan cómo usar tu API.
 
 ## ¿Cómo funciona Postman?
