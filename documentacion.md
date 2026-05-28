@@ -85,6 +85,9 @@ pickup1.describir()  # Imprime: Esta pick-up es una toyota hilux.
 pickup2.describir()  # Imprime: Esta pick-up es una volkswagen amarok.
 ```
  
+![pick-up](img/pick-up.jpg)
+
+
 Con una clase, puedes crear todas las pick-ups que quieras usando el mismo molde.
 
 **💡 ¿Qué significa `self.marca = marca`?**
@@ -94,6 +97,9 @@ Piénsalo como una ficha de registro:
 - `self.marca` (izquierda) → es donde ese dato queda guardado dentro del objeto para usarlo después.
 
 No tienen que llamarse igual, pero se hace por convención para que quede claro que son el mismo dato.
+
+![clases](img/clases.jpg)
+
 
 ## ⚠️ Errores comunes al usar clases
  
@@ -203,7 +209,7 @@ def obtener_recetas():
 
 El método **POST** se usa para enviar datos al servidor y crear un nuevo recurso.
 
-- No es **idempotente**: Si envías la misma petición POST tres veces, crearás tres registros duplicados en la base de datos.
+- No es **idempotente**:  Si envías la misma petición POST tres veces, crearás tres registros duplicados en la base de datos.
 - La información viaja oculta y segura dentro del **cuerpo (body)** de la solicitud, no en la URL.
 
 **Ejemplo (Flask):**
@@ -321,14 +327,9 @@ Lo que hace paso a paso:
 ---
 
 ### Resumen de los verbos HTTP
- 
-| Verbo | Acción | ¿Idempotente? | ¿Usa body? |
-|---|---|---|---|
-| GET | Leer | ✅ Sí | ❌ No |
-| POST | Crear | ❌ No | ✅ Sí |
-| PUT | Reemplazar todo | ✅ Sí | ✅ Sí |
-| PATCH | Actualizar parcialmente | ✅ Sí | ✅ Sí |
-| DELETE | Eliminar | ✅ Sí | ❌ No |
+
+![apis](img/apis_verbos_http.jpg)
+
  
 ---
 
@@ -402,28 +403,9 @@ Para entender por qué existe MongoDB, hay que compararlo con el modelo tradicio
 
 
 ### Comparativa rápida
- 
-| | **SQL (Relacional)** | **NoSQL (No Relacional)** |
-|---|---|---|
-| **Ejemplos** | MySQL, PostgreSQL | MongoDB, Redis, Cassandra |
-| **Estructura** | Tablas con filas y columnas | Documentos, clave-valor, grafos… |
-| **Esquema** | Fijo, definido antes de usar | Flexible, puede cambiar |
-| **Relaciones** | JOINs entre tablas | Datos anidados o referencias |
-| **Escalado** | Vertical (más potencia al servidor) | Horizontal (más servidores) |
-| **Ideal para** | Datos muy estructurados y relacionados | Datos variables, gran volumen, velocidad |
- 
 
+ ![sqlvsnosql](img/bbdd.jpg)
 
-### ¿Cuándo usar cada una?
- 
-**✅ Usa SQL cuando:**
-- Los datos tienen muchas relaciones entre sí (ej. pedidos → clientes → productos)
-- Necesitas consistencia y transacciones seguras (banca, contabilidad)
-
-**✅ Usá MongoDB cuando:**
-- Los datos cambian de estructura frecuentemente.
-- Necesitas escalar rápido con mucho volumen (redes sociales, catálogos).
-- Los datos se leen más de lo que se relacionan entre sí
 
  
 > **En resumen:** MongoDB te da **flexibilidad y velocidad** a cambio de renunciar a la rigidez estructurada del mundo relacional. Ninguna es mejor en absoluto, depende del problema que quieras resolver.
@@ -446,6 +428,8 @@ Imagina que estás en un restaurante:
 > 💡 Tu nunca entras a la cocina. No sabes cómo funciona por dentro. Solo le dices al camarero qué quieres, y él se encarga del resto.
 
 ## 📱 ¿Cómo funciona en la práctica?
+
+![apis](img/como_funciona_una_api_final.jpg)
 
 Cuando abres una app del tiempo y ves la temperatura de tu ciudad, esto es lo que ocurre por detrás:
 
@@ -607,6 +591,10 @@ for obj in [Robot(), Persona()]:
 ```
 > Python no verifica el tipo, solo verifica si el método existe. Eso es **duck typing**.
 
+
+![polimorfismo](img/polimorfismo.png)
+
+
 ## ¿Por qué es útil?
 
 💡**Ventaja clave:** Te permite escribir código más limpio, flexible y mantenible. Si en el futuro decides añadir una clase `Pájaro` con el método `sonido()`, la función `hacer_sonido()` seguirá funcionando perfectamente sin necesidad de modificar una sola línea de su código.
@@ -635,46 +623,8 @@ Por ejemplo, cuando haces una suma con el operador +, Python busca el método du
 | `objeto[0]` | `objeto.__getitem__(0)` |
 
 
-## Métodos dunder más comunes
+![dunder](img/Gemini_Generated_Image_xzidexxzidexxzid.png)
 
-### Ciclo de vida del objeto
-| Método | Cuándo se usa |
-|---|---|
-| `__init__` | Al inicializar los atributos del objeto('El Constructor') |
-| `__del__` | Al destruir el objeto. Importante!: Python decide cuándo llamarlo, no el programador|
-
-### Representación
-| Método | Cuándo se usa |
-|---|---|
-| `__str__` | `print(objeto)` — formato legible para humanos |
-| `__repr__` | Representación técnica, para depuración (*debugging*) |
-
-### Operadores matemáticos
-| Método | Cuándo se usa |
-|---|---|
-| `__add__` | `objeto + otro` |
-| `__sub__` | `objeto - otro` |
-| `__mul__` | `objeto * otro` |
-| `__truediv__` | `objeto / otro` |
-
-### Comparación
-| Método | Cuándo se usa |
-|---|---|
-| `__eq__` | `objeto == otro` |
-| `__lt__` | `objeto < otro` |
-| `__gt__` | `objeto > otro` |
-
-### Contenedores
-| Método | Cuándo se usa |
-|---|---|
-| `__len__` | `len(objeto)` |
-| `__getitem__` | `objeto[0]` |
-| `__contains__` | `x in objeto` |
-
-### Llamable
-| Método | Cuándo se usa |
-|---|---|
-| `__call__` | `objeto()` — hace que el objeto se comporte como una función |
 
 
 ## Ejemplos prácticos:
@@ -813,4 +763,6 @@ Los decoradores son una de las herramientas más potentes de Python. Se usan con
 
 - **Caché:** Guardar el resultado de operaciones pesadas para no tener que repetirlas si se piden los mismos datos.
 
+
+![decoradores](img/decoradores.png)
 ---
