@@ -10,9 +10,9 @@
 ## 📄Tabla de contenidos:
 
 [¿Para qué usamos Clases en Python?](#clases-y-objetos-en-python)
-[¿Qué método se ejecuta automáticamente cuando se crea una instancia de una clase?](#el-método-constructor-`init`)
+[¿Qué método se ejecuta automáticamente cuando se crea una instancia de una clase?](##el-método-constructor-init)
 [¿Qué es el polimorfismo?](#qué-es-el-polimorfismo)
-[¿Qué es un método dunder?](#métodos-dunder)
+[¿Qué es un método dunder?](#qué-es-un-método-dunder)
 [¿Qué es un decorador de python?](#decoradores-en-python)
 [¿Qué es una API?](#qué-es-una-api)
 [¿Cuáles son los verbos de API?](#verbos-de-apis-en-python)
@@ -48,7 +48,7 @@ class NombreClase:
     pass
 ```
 
-## ⚙️ El método constructor `__init__`
+## ⚙️El método constructor `__init__`
 
 El método que se ejecuta automáticamente cuando se crea una instancia de una clase es `__init__` (abreviación de *initialize*, inicializar en español). En el mundo de la programación, a este tipo de funciones especiales se les conoce como constructores.
 
@@ -105,7 +105,7 @@ modelo_pickup2 = "amarok"
  
 **Ejemplo con clases (organizado):**
 ```python
-class Pick_up:
+class PickUp:
     def __init__(self, marca, modelo):
         self.marca = marca
         self.modelo = modelo
@@ -116,13 +116,14 @@ class Pick_up:
 
  
 # Creamos los objetos
-pickup1 = Pick_up("toyota", "hilux")
-pickup2 = Pick_up("volkswagen", "amarok")
+pickup1 = PickUp("toyota", "hilux")
+pickup2 = PickUp("volkswagen", "amarok")
  
 # Ahora todas las pick-ups saben describirse solas
 pickup1.describir()  # Imprime: Esta pick-up es una toyota hilux.
 pickup2.describir()  # Imprime: Esta pick-up es una volkswagen amarok.
 ```
+
 <p align="center">
   <img src="img/pick-up.jpg" alt="clases y metodo __init__" width="650">
 </p> 
@@ -148,13 +149,39 @@ class Coche:
 
 # ¿Qué es el polimorfismo?
 
-El polimorfismo es uno de los pilares fundamentales de la Programación Orientada a Objetos (POO). La palabra viene del griego **poly** (muchos) y **morphé** (formas), y en programación significa la capacidad de que **diferentes clases tengan métodos con el mismo nombre pero con comportamientos distintos**.
+El polimorfismo es uno de los pilares fundamentales de la Programación Orientada a Objetos (POO), que viste en la infografía inicial. La palabra viene del griego **poly** (muchos) y **morphé** (formas), y en programación significa la capacidad de que **diferentes clases tengan métodos con el mismo nombre pero con comportamientos distintos**.
 
 En Python, el polimorfismo es especialmente flexible y natural gracias al **Duck Typing** (tipado dinámico), que se resume en la famosa frase: *"Si camina como un pato y grazna como un pato, entonces es un pato"*. A Python no le importa el tipo de objeto que sea, sino lo que ese objeto puede hacer.
 
 ## Formas de aplicar polimorfismo en Python
 
-### 1. Con funciones (la más simple) -> distintos objetos, mismo método:
+A diferencia de otros lenguajes más rígidos, Python ofrece dos maneras principales de aplicar el polimorfismo:
+
+
+### 1. Con herencia -> un padre define el método, los hijos lo sobreescriben:
+
+```python
+class Animal:
+    def sonido(self):
+        return "..."
+
+class Perro(Animal):
+    def sonido(self):
+        return "¡Guau!"
+
+class Gato(Animal):
+    def sonido(self):
+        return "¡Miau!"
+
+
+print(Perro().sonido())  # ¡Guau!
+print(Gato().sonido())   # ¡Miau!
+```
+> Todos heredan de `Animal`, pero cada uno responde diferente. Esto se llama **sobrescritura de métodos** (*method overriding*).
+
+### 2. Con duck typing -> sin clase padre en común
+
+Python no exige que los objetos compartan una clase padre. Si tiene el método, funciona.
 
 ```python
 class Perro:
@@ -172,45 +199,8 @@ hacer_sonido(Perro())  # ¡Guau!
 hacer_sonido(Gato())   # ¡Miau!
 
 ```
-> La función `hacer_sonido` no sabe qué animal recibe, simplemente llama a `sonido()`.
+> 🔎 Como ves, acá Perro y Gato no tienen ninguna relación familiar (no heredan de nadie en común), pero el polimorfismo funciona igual gracias al Duck Typing.
 
-### 2. Con herencia -> un padre define el método, los hijos lo sobreescriben:
-
-```python
-class Animal:
-    def sonido(self):
-        return "..."
-
-class Perro(Animal):
-    def sonido(self):
-        return "¡Guau!"
-
-class Gato(Animal):
-    def sonido(self):
-        return "¡Miau!"
-
-```
-> Todos heredan de `Animal`, pero cada uno responde diferente. Esto se llama **sobrescritura de métodos** (*method overriding*).
-
-### 3. Con duck typing -> sin clase padre en común
-
-Python no exige que los objetos compartan una clase padre. Si tiene el método, funciona.
-
-
-```python
-class Robot:
-    def hablar(self):
-        return "Bip bop"
-
-class Persona:
-    def hablar(self):
-        return "Hola!"
-
-# No heredan de nada en común, pero funciona igual
-for obj in [Robot(), Persona()]:
-    print(obj.hablar())
-```
-> Python no verifica el tipo, solo verifica si el método existe. Eso es **duck typing**.
 
 <p align="center">
   <img src="img/polimorfismo.png" alt="polimorfismo" width="650">
@@ -223,6 +213,228 @@ for obj in [Robot(), Persona()]:
 
 ---
 
+# ¿Qué es un método dunder?
+
+Un **método dunder** (abreviatura en inglés de *double underscore*, o doble guion bajo) es un método especial en Python cuyo nombre comienza y termina con dos guiones bajos (por ejemplo, `__init__` o `__str__`).
+
+También se les conoce como **métodos mágicos**, y sirven para definir cómo deben comportarse tus objetos ante operaciones nativas de Python (como sumarlos, imprimirlos en pantalla o medir su longitud).
+Son la base del polimorfismo en Python, ya que permiten que objetos distintos respondan igual ante las mismas operaciones.
+
+
+## ¿Cómo funcionan? (El "detrás de escena")
+
+No sueles llamar a estos métodos directamente escribiendo `objeto.__str__()`. En su lugar, **Python** los invoca automáticamente por debajo cuando usas ciertos operadores o funciones nativas.
+
+Por ejemplo, cuando haces una suma con el operador +, Python busca el método dunder `__add__`:
+
+| Lo que tú escribes | Lo que Python hace por detrás |
+|---|---|
+| `objeto1 + objeto2` | `objeto1.__add__(objeto2)` |
+| `len(objeto)` | `objeto.__len__()` |
+| `print(objeto)` | `objeto.__str__()` |
+| `objeto[0]` | `objeto.__getitem__(0)` |
+
+---
+
+<p align="center">
+  <img src="img/dunder.png" alt="Esquema de métodos dunder en Python" width="600">
+</p>
+
+---
+
+## Ejemplos prácticos:
+
+Vamos a crear una clase `Producto` y a darle "superpoderes" usando métodos dunder para poder imprimirlos, compararlos y sumarlos directamente:
+
+```python
+# El constructor: inicializa los atributos del objeto
+class Producto:
+    def __init__(self, nombre, precio):
+        self.nombre = nombre
+        self.precio = precio
+
+    # Para que print(producto) muestre algo legible
+    def __str__(self):
+        return f"{self.nombre} ({self.precio}€)"
+
+    # Para comparar si dos productos tienen el mismo precio
+    def __eq__(self, otro):
+        if isinstance(otro, Producto):
+            return self.precio == otro.precio
+        return False
+
+    # Para poder sumar el precio de dos productos directamente
+    def __add__(self, otro):
+        return self.precio + otro.precio
+
+# Probando nuestra clase "mágica"
+p1 = Producto("Café", 5)
+p2 = Producto("Galletas", 3)
+p3 = Producto("Té", 5)
+
+print(p1)          # Invoca __str__ -> Imprime: Café (5€)
+print(p1 == p3)    # Invoca __eq__  -> Imprime: True (cuestan lo mismo)
+print(p1 + p2)     # Invoca __add__ -> Imprime: 8
+
+```
+> Los más usados del día a día son `__init__`, `__str__`, `__repr__`, `__len__` y `__eq__`.
+
+---
+
+# Decoradores en Python
+
+Un **decorador** es una función que envuelve a otra función para añadirle comportamiento extra, **sin modificar su código original**.
+
+> 💡**Analogía simple:** Imagina que un decorador es como la funda impermeable de un teléfono: el teléfono sigue haciendo exactamente lo mismo (llamar, navegar, jugar), pero ahora, gracias a la funda, tiene el "superpoder" de ser resistente al agua sin haber alterado sus circuitos internos.
+
+## El secreto detrás de los decoradores
+
+Para entender los decoradores, primero hay que saber que en Python las funciones son **objetos de primera clase**. Esto significa que:
+
+- Puedes pasar una función como argumento a otra función.
+
+- Una función puede devolver otra función como su resultado.
+
+Por eso un decorador se define como una función que:
+- Recibe una función (`func`).
+- Crea una función interna (*envoltura* o *wrapper*) que añade la lógica extra.
+- Devuelve esa función interna.
+
+**Ejemplo sin decorador:**
+```python
+def saludar():
+    print("¡Hola!")
+
+saludar()  # → ¡Hola!
+```
+
+**Ahora con un decorador que añade un mensaje antes y después:**
+
+```python
+def mi_decorador(func):
+    def envoltura():
+        print("1. Algo que se hace ANTES de ejecutar la función.")
+        func()  # Aquí se ejecuta la función original
+        print("2. Algo que se hace DESPUÉS de ejecutar la función.")
+    return envoltura
+
+@mi_decorador
+def saludar():
+    print("¡Hola!")
+
+saludar()    
+
+# Resultado en consola:
+# 1. Algo que se hace ANTES de ejecutar la función.
+# ¡Hola!
+# 2. Algo que se hace DESPUÉS de ejecutar la función.
+```
+
+> 💡**¿Qué es el @?** El `@mi_decorador` es azúcar sintáctica (una forma más bonita de escribir código). Es exactamente lo mismo que escribir de forma manual: `saludar = mi_decorador(saludar)`.
+
+
+## 🚀 ¿Qué pasa si la función original recibe argumentos?
+
+El decorador básico que vimos arriba solo funciona para funciones que no reciben ningún parámetro. Si intentamos decorar una función que recibe un nombre, por ejemplo, `def saludar(nombre):`, Python nos dará un error.
+
+Para que nuestro decorador sea **universal** y sirva para cualquier función, usamos `*args` (para argumentos posicionales) y `**kwargs` (para argumentos con nombre).
+
+Mira cómo cambia el decorador para aceptar parámetros:
+
+```python
+def mi_decorador_universal(func):
+    # Ponemos *args y **kwargs para que la envoltura atrape CUALQUIER argumento
+    def envoltura(*args, **kwargs):
+        print("1. Algo antes...")
+        
+        # Le pasamos esos mismos argumentos a la función original
+        resultado = func(*args, **kwargs)
+        
+        print("2. Algo después...")
+        return resultado # Retornamos el resultado por si la función devuelve algo
+    return envoltura
+
+@mi_decorador_universal
+def saludar_persona(nombre, saludo="¡Hola!"):
+    print(f"{saludo}, {nombre}. ¿Cómo estás?")
+
+# ¡Ahora funciona perfectamente con argumentos!
+saludar_persona("Carlos", saludo="Buenas tardes")
+
+
+#Resultado en consola
+# 1. Algo antes...
+# Buenas tardes, Carlos. ¿Cómo estás?
+# 2. Algo después...
+```
+
+## ¿Por qué son tan útiles?
+
+Los decoradores son una de las herramientas más potentes de Python. Se usan constantemente para:
+
+- **Autenticación y seguridad:** Verificar si un usuario ha iniciado sesión antes de mostrarle una página web (muy usado en Flask o Django).
+
+- **Logging:** Guardar un registro de qué funciones está tocando un usuario.
+
+- **Caché:** Guardar el resultado de operaciones pesadas para no tener que repetirlas si se piden los mismos datos.
+
+---
+<p align="center">
+  <img src="img/decoradores.png" alt="Decoradores en Python" width="600">
+</p>
+
+---
+
+# ¿Qué es una API?
+
+Una **API** (por sus siglas en inglés, Application Programming Interface) o Interfaz de Programación de Aplicaciones, es un conjunto de reglas que permite que diferentes programas o aplicaciones se comuniquen entre sí. Actúa como un **puente o intermediario**, permitiendo que un sistema solicite datos o funciones a otro de forma automática y segura.
+
+## La analogía del restaurante 🍽️
+
+Imagina que estás en un restaurante:
+
+- **Tu** eres la aplicación que quiere algo (el cliente).
+- **La cocina** es el sistema que tiene lo que necesitas (el servidor / base de datos).
+- **El camarero** es la API: el intermediario que lleva tu pedido, lo comunica a la cocina, y trae la respuesta de vuelta.
+
+> 💡 Tu nunca entras a la cocina. No sabes cómo funciona por dentro. Solo le dices al camarero qué quieres, y él se encarga del resto.
+---
+
+## 📱 ¿Cómo funciona en la práctica?
+
+<p align="center">
+  <img src="img/como_funciona_una_api_final.jpg" alt="Flujo de Request y Response en una API" width="650">
+</p>
+
+Cuando abres una app del tiempo y ves la temperatura de tu ciudad, esto es lo que ocurre por detrás:
+
+- ➡️ Tu app le manda una petición (**request**) a una API → "Dame el clima de Bilbao". 
+- 🔎 La API busca esa información en su servidor
+- ⬅️ La API te devuelve una respuesta (**response**) → generalmente en formato JSON
+
+```json
+{
+  "ciudad": "Bilbao",
+  "temperatura": 18,
+  "estado": "lluvia"
+}
+```
+
+## ¿Por qué son tan importantes para un programador?
+
+Las APIs son los bloques de construcción del software moderno por tres razones principales:
+
+- **No reinventas la rueda:** Si estás creando una app de reparto de comida, no vas a programar un mapa desde cero. Usas la API de Google Maps.
+
+- **Seguridad:** Permiten compartir funciones o datos sin enseñar cómo está hecho tu código por dentro ni exponer tu base de datos directamente al público.
+
+- **Separación de tareas:** Permiten que el equipo de Frontend (los que hacen la interfaz visual en React, HTML, etc.) trabaje de forma independiente al equipo de Backend (los que programan la lógica y las bases de datos en Flask, Node.js, etc.). Ambos mundos se unen gracias a la API.
+
+> 📌 **En Resumen:** Una API es una herramienta que te permite conectar sistemas, usar herramientas de otros creadores en tu propia aplicación, y estructurar tu código de forma limpia y profesional.
+
+---
+
+
 # Verbos de APIs en Python
 
 Las **APIs REST** son fundamentales en el desarrollo de software moderno. Para interactuar con ellas, utilizamos los **verbos HTTP**, que permiten definir el tipo de acción que queremos realizar sobre los recursos de la API.
@@ -230,9 +442,7 @@ Las **APIs REST** son fundamentales en el desarrollo de software moderno. Para i
 ## ¿Qué son los verbos HTTP?
  
 Los verbos HTTP (también llamados métodos HTTP) indican la acción que se desea realizar sobre un recurso en una API. En una API REST, los recursos suelen representarse como URLs.
-Por ejemplo, en una API que gestiona recetas de cocina, el recurso principal sería:
-
-https://api.ejemplo.com/recetas
+Por ejemplo, en una API que gestiona recetas de cocina, el recurso principal sería: https://api.ejemplo.com/recetas
 
 Los verbos HTTP nos permiten:
 
@@ -263,6 +473,8 @@ def obtener_recetas():
     return jsonify(resultado)
 ```    
 >💡 Cuando un cliente (como un navegador web) hace una petición GET a `/recetas`, este código va a la base de datos, trae todas las recetas registradas, las convierte a formato JSON y las devuelve. Es como decirle al servidor: "dame la lista de recetas que tienes guardada".
+
+---
 
 ### 2. POST – Crear un nuevo recurso
 
@@ -346,11 +558,9 @@ La diferencia clave con POST es que aquí ya existe el registro, no lo creas sin
 
 ### 💡 ¿Y qué pasa con PATCH?– Actualizar parcialmente un recurso
 
-A diferencia de PUT (que sobrescribe todo el objeto), el método **PATCH** se utiliza para realizar actualizaciones parciales. Si una receta tuviera 20 campos y solo quieres cambiar el tiempo de cocción, usas PATCH para enviar únicamente ese dato específico, dejando el resto intacto.
+A diferencia de PUT (que sobrescribe todo el objeto), el método **PATCH** se utiliza para realizar actualizaciones parciales. Si una receta tuviera 20 campos y solo quieres cambiar el tiempo de cocción, usas PATCH para enviar únicamente ese dato específico, dejando el resto intacto sin necesidad de reescribir todo el JSON.
 
-- No requiere enviar todos los atributos.
-- Es útil cuando el recurso es muy grande.
-
+--- 
 
 ### 4. DELETE – Eliminar un recurso
 
@@ -387,13 +597,85 @@ Lo que hace paso a paso:
 
 ### Resumen de los verbos HTTP
 
-![apis](img/apis_verbos_http.jpg)
+<p align="center">
+  <img src="img/apis_verbos_http.jpg" alt="Api verbos http" width="650">
+</p>
 
  
 ---
 
+# Postman: el laboratorio de pruebas de APIs
 
-# 4. Base de datos MongoDB
+**Postman** es, sin duda, la herramienta estrella para cualquiera que trabaje desarrollando o consumiendo APIs. Si estás construyendo tu propio backend o necesitas usar datos de un servicio externo, Postman va a ser tu mejor amigo. 
+
+> 💡**Importante:** Es **gratuito** y se descarga como **aplicación de escritorio**.
+
+## ¿Qué es Postman? 
+
+**Postman** es una herramienta visual que te permite **probar APIs sin necesidad de escribir código**. Funciona como un laboratorio de pruebas para APIs.
+
+Imagina que estás programando el backend de tu aplicación con Python y Flask, y creas una ruta para que los usuarios puedan registrarse. En una situación normal, para probar si esa ruta funciona, tendrías que programar también la pantalla del frontend (el formulario en HTML/CSS), escribir los datos, hacer clic en el botón y ver qué pasa.
+
+Postman existe para evitarte todo ese trabajo. Te permite **simular ser el frontend** y enviar peticiones directas a tu backend para comprobar si responde correctamente.
+
+## ¿Para qué sirve? (Sus 3 usos principales)
+
+- 💉 **Probar APIs (Testing)**: 
+Te permite enviar peticiones (`requests`) a cualquier URL y analizar minuciosamente la respuesta (`response`). Puedes ver qué datos te devuelve, en qué formato (generalmente JSON), cuánto tarda en responder y si el código de estado es el correcto (como un 200 OK o un 404 Not Found).
+
+- 🔧 **Diseñar y Desarrollar APIs**: 
+Mientras estás escribiendo el código de tu servidor, utilizas Postman para asegurarte de que cada "ruta" o endpoint hace exactamente lo que querés antes de conectarla con la interfaz visual.
+
+- 📁 **Documentar y Organizar (Colecciones)**: 
+Postman te permite guardar tus peticiones en carpetas llamadas Collections (Colecciones). Si tu aplicación tiene 20 rutas diferentes (para usuarios, para productos, para el carrito), podés guardarlas todas organizadas. Incluso puedes compartir esa colección con otros programadores para que sepan cómo usar tu API.
+
+## ¿Cómo funciona Postman?
+
+El funcionamiento de Postman replica exactamente el flujo de **Petición ➡️ Respuesta** que viste al estudiar las APIs, pero ofreciéndote una interfaz gráfica muy cómoda.
+
+### Ejemplo práctico paso a paso:
+
+Haremos una búsqueda del siguiente link de muestra que nos ofrece la plataforma web: `https://postman-echo.com/get`
+
+
+1. Selecciona el método **GET** en el menú desplegable que se encuentra a la izquierda de la barra de búsqueda.
+
+2. Coloca la URL de prueba (`https://postman-echo.com/get`) en el panel de búsqueda superior.
+
+3. Presiona el botón azul **Send** ubicado a la derecha.
+
+> 💡 **Tip:** Si deseas guardar esta configuración para no tener que escribirla de nuevo en el futuro, puedes presionar el botón **Save** que se encuentra en la parte superior derecha.
+
+<p align="center">
+  <img src="img/request.png" alt="request" width="650">
+</p>
+
+
+### Analizando la Respuesta
+
+Una vez que presionas **Send**, la mitad inferior de Postman te mostrará el resultado del servidor. En esa zona deberás buscar tres datos fundamentales:
+
+- El **JSON de respuesta** (con colores y sangrías para que se lea fácil).
+
+- El **Status Code** (el número que indica si todo salió bien o hubo un error).
+
+- El **Tiempo de respuesta** (útil para ver si tu base de datos o tu código están yendo lentos).
+
+<p align="center">
+  <img src="img/response.png" alt="response" width="650">
+</p>
+
+## 📌 La Analogía Final
+
+Si dijimos que una API es el camarero de un restaurante que lleva los pedidos de la mesa a la cocina...
+
+**Postman es un cliente experto** que se sienta en la mesa con un cuaderno, le pide cosas rarísimas al camarero de todas las formas posibles (platos sin sal, menús espaciales, cosas que no están en la carta) para comprobar si el camarero hace bien su trabajo y si la cocina responde correctamente a cada situación.
+
+> 📌 **En resumen:** Postman es el entorno de pruebas de las APIs. Así como usás el navegador para probar una web, usás Postman para probar una API.
+
+---
+
+# Base de datos MongoDB
 
 ## ¿Qué es MongoDB?
 
@@ -463,291 +745,21 @@ Para entender por qué existe MongoDB, hay que compararlo con el modelo tradicio
 
 ### Comparativa rápida
 
- ![sqlvsnosql](img/bbdd.jpg)
+<p align="center">
+  <img src="img/bbdd.jpg" alt="sql vs nosql" width="650">
+</p>
 
 
- 
-> **En resumen:** MongoDB te da **flexibilidad y velocidad** a cambio de renunciar a la rigidez estructurada del mundo relacional. Ninguna es mejor en absoluto, depende del problema que quieras resolver.
-
----
-
-
-# 5. ¿Qué es una API?
-
-Una **API** (por sus siglas en inglés, Application Programming Interface) o Interfaz de Programación de Aplicaciones, es un conjunto de reglas que permite que diferentes programas o aplicaciones se comuniquen entre sí. Actúa como un **puente o intermediario**, permitiendo que un sistema solicite datos o funciones a otro de forma automática y segura.
-
-## La analogía del restaurante 🍽️
-
-Imagina que estás en un restaurante:
-
-- **Tu** eres la aplicación que quiere algo (el cliente).
-- **La cocina** es el sistema que tiene lo que necesitás (el servidor / base de datos).
-- **El camarero** es la API: el intermediario que lleva tu pedido, lo comunica a la cocina, y trae la respuesta de vuelta.
-
-> 💡 Tu nunca entras a la cocina. No sabes cómo funciona por dentro. Solo le dices al camarero qué quieres, y él se encarga del resto.
-
-## 📱 ¿Cómo funciona en la práctica?
-
-![apis](img/como_funciona_una_api_final.jpg)
-
-Cuando abres una app del tiempo y ves la temperatura de tu ciudad, esto es lo que ocurre por detrás:
-
-- ➡️ Tu app le manda una petición (**request**) a una API → "Dame el clima de Bilbao". 
-- 🔎 La API busca esa información en su servidor
-- ⬅️ La API te devuelve una respuesta (**response**) → generalmente en formato JSON
-
-```json
-{
-  "ciudad": "Bilbao",
-  "temperatura": 18,
-  "estado": "lluvia"
-}
-```
-
-## ¿Por qué son tan importantes para un programador?
-
-Las APIs son los bloques de construcción del software moderno por tres razones principales:
-
-- **No reinventas la rueda:** Si estás creando una app de reparto de comida, no vas a programar un mapa desde cero. Usas la API de Google Maps.
-
-- **Seguridad:** Permiten compartir funciones o datos sin enseñar cómo está hecho tu código por dentro ni exponer tu base de datos directamente al público.
-
-- **Separación de tareas:** Permiten que el equipo de Frontend (los que hacen la interfaz visual en React, HTML, etc.) trabaje de forma independiente al equipo de Backend (los que programan la lógica y las bases de datos en Flask, Node.js, etc.). Ambos mundos se unen gracias a la API.
-
-> 📌 **En Resumen:** Una API es una herramienta que te permite conectar sistemas, usar herramientas de otros creadores en tu propia aplicación, y estructurar tu código de forma limpia y profesional.
+ > **En resumen:** MongoDB te da **flexibilidad y velocidad** a cambio de renunciar a la rigidez estructurada del mundo relacional. Ninguna es mejor en absoluto, depende del problema que quieras resolver.
 
 ---
 
-# 6. Postman: el laboratorio de pruebas de APIs
+# 📚 Cierre
+A lo largo de esta documentación recorrimos los pilares de la Programación Orientada a Objetos, desde cómo modelar el mundo real con clases hasta cómo comunicar aplicaciones entre sí mediante APIs. Estos conceptos — clases, polimorfismo, dunders, decoradores, APIs y bases de datos — no son temas aislados: en el desarrollo web moderno aparecen juntos constantemente.
 
-**Postman** es, sin duda, la herramienta estrella para cualquiera que trabaje desarrollando o consumiendo APIs. Si estás construyendo tu propio backend o necesitas usar datos de un servicio externo, Postman va a ser tu mejor amigo. 
 
-> 💡**Importante:** Es **gratuito** y se descarga como **aplicación de escritorio**.
 
-## ¿Qué es Postman? 
 
-**Postman** es una herramienta visual que te permite **probar APIs sin necesidad de escribir código**. Funciona como un laboratorio de pruebas para APIs.
 
-Imagina que estás programando el backend de tu aplicación con Python y Flask, y creas una ruta para que los usuarios puedan registrarse. En una situación normal, para probar si esa ruta funciona, tendrías que programar también la pantalla del frontend (el formulario en HTML/CSS), escribir los datos, hacer clic en el botón y ver qué pasa.
 
-Postman existe para evitarte todo ese trabajo. Te permite **simular ser el frontend** y enviar peticiones directas a tu backend para comprobar si responde correctamente.
 
-## ¿Para qué sirve? (Sus 3 usos principales)
-
-- 💉 **Probar APIs (Testing)**: 
-Te permite enviar peticiones (`requests`) a cualquier URL y analizar minuciosamente la respuesta (`response`). Puedes ver qué datos te devuelve, en qué formato (generalmente JSON), cuánto tarda en responder y si el código de estado es el correcto (como un 200 OK o un 404 Not Found).
-
-- 🔧 **Diseñar y Desarrollar APIs**: 
-Mientras estás escribiendo el código de tu servidor, utilizas Postman para asegurarte de que cada "ruta" o endpoint hace exactamente lo que querés antes de conectarla con la interfaz visual.
-
-- 📁 **Documentar y Organizar (Colecciones)**: 
-Postman te permite guardar tus peticiones en carpetas llamadas Collections (Colecciones). Si tu aplicación tiene 20 rutas diferentes (para usuarios, para productos, para el carrito), podés guardarlas todas organizadas. Incluso puedes compartir esa colección con otros programadores para que sepan cómo usar tu API.
-
-## ¿Cómo funciona Postman?
-
-El funcionamiento de Postman replica exactamente el flujo de **Petición ➡️ Respuesta** que viste al estudiar las APIs, pero ofreciéndote una interfaz gráfica muy cómoda.
-
-### Ejemplo práctico paso a paso:
-
-Haremos una búsqueda del siguiente link de muestra que nos ofrece la plataforma web: `https://postman-echo.com/get`
-
-
-1. Selecciona el método **GET** en el menú desplegable que se encuentra a la izquierda de la barra de búsqueda.
-
-2. Coloca la URL de prueba (https://postman-echo.com/get) en el panel de búsqueda superior.
-
-3. Presiona el botón azul **Send** ubicado a la derecha.
-
-> 💡 **Tip:** Si deseas guardar esta configuración para no tener que escribirla de nuevo en el futuro, puedes presionar el botón **Save** que se encuentra en la parte superior derecha.
-
-![request](img/image.png)
-
-### Analizando la Respuesta
-
-Una vez que presionas **Send**, la mitad inferior de Postman te mostrará el resultado del servidor. En esa zona deberás buscar tres datos fundamentales:
-
-- El **JSON de respuesta** (con colores y sangrías para que se lea fácil).
-
-- El **Status Code** (el número que indica si todo salió bien o hubo un error).
-
-- El **Tiempo de respuesta** (útil para ver si tu base de datos o tu código están yendo lentos).
-
-![response](img/image-1.png)
-
-## 📌 La Analogía Final
-
-Si dijimos que una API es el camarero de un restaurante que lleva los pedidos de la mesa a la cocina...
-
-**Postman es un cliente experto** que se sienta en la mesa con un cuaderno, le pide cosas rarísimas al camarero de todas las formas posibles (platos sin sal, menús espaciales, cosas que no están en la carta) para comprobar si el camarero hace bien su trabajo y si la cocina responde correctamente a cada situación.
-
-> 📌 **En resumen:** Postman es el entorno de pruebas de las APIs. Así como usás el navegador para probar una web, usás Postman para probar una API.
-
----
-
-
-
-# 8. Métodos dunder
-
-Un **método dunder** (abreviatura en inglés de *double underscore*, o doble guion bajo) es un método especial en Python cuyo nombre comienza y termina con dos guiones bajos (por ejemplo, `__init__` o `__str__`).
-
-También se les conoce como **métodos mágicos**, y sirven para definir cómo deben comportarse tus objetos ante operaciones nativas de Python (como sumarlos, imprimirlos en pantalla o medir su longitud).
-Son la base del polimorfismo en Python, ya que permiten que objetos distintos respondan igual ante las mismas operaciones.
-
-
-## ¿Cómo funcionan? (El "detrás de escena")
-
-No sueles llamar a estos métodos directamente escribiendo `objeto.__str__()`. En su lugar, **Python** los invoca automáticamente por debajo cuando usas ciertos operadores o funciones nativas.
-
-Por ejemplo, cuando haces una suma con el operador +, Python busca el método dunder `__add__`:
-
-| Lo que tú escribes | Lo que Python hace por detrás |
-|---|---|
-| `objeto1 + objeto2` | `objeto1.__add__(objeto2)` |
-| `len(objeto)` | `objeto.__len__()` |
-| `print(objeto)` | `objeto.__str__()` |
-| `objeto[0]` | `objeto.__getitem__(0)` |
-
-
-![dunder](img/dunder.png)
-
-
-
-## Ejemplos prácticos:
-
-```python
-# El constructor: inicializa los atributos del objeto
-class Producto:
-    def __init__(self, nombre, precio):
-        self.nombre = nombre
-        self.precio = precio
-
-    # Para que print(producto) muestre algo legible
-    def __str__(self):
-        return f"{self.nombre} ({self.precio}€)"
-
-    # Para comparar si dos productos tienen el mismo precio
-    def __eq__(self, otro):
-        if isinstance(otro, Producto):
-            return self.precio == otro.precio
-        return False
-
-    # Para poder sumar el precio de dos productos directamente
-    def __add__(self, otro):
-        return self.precio + otro.precio
-
-# Probando nuestra clase "mágica"
-p1 = Producto("Café", 5)
-p2 = Producto("Galletas", 3)
-p3 = Producto("Té", 5)
-
-print(p1)          # Invoca __str__ -> Imprime: Café (5€)
-print(p1 == p3)    # Invoca __eq__  -> Imprime: True (cuestan lo mismo)
-print(p1 + p2)     # Invoca __add__ -> Imprime: 8
-
-```
-> Los más usados del día a día son `__init__`, `__str__`, `__repr__`, `__len__` y `__eq__`.
-
----
-
-# 9. Decoradores en Python
-
-Un **decorador** es una función que envuelve a otra función para añadirle comportamiento extra, **sin modificar su código original**.
-
-> 💡**Analogía simple:** Imagina que un decorador es como la funda impermeable de un teléfono: el teléfono sigue haciendo exactamente lo mismo (llamar, navegar, jugar), pero ahora, gracias a la funda, tiene el "superpoder" de ser resistente al agua sin haber alterado sus circuitos internos.
-
-## El secreto detrás de los decoradores
-
-Para entender los decoradores, primero hay que saber que en Python las funciones son objetos de primera clase. Esto significa que:
-
-- Puedes pasar una función como argumento a otra función.
-
-- Una función puede devolver otra función como su resultado.
-
-### Estructura básica de un decorador
-
-Un decorador se define como una función que:
-- Recibe una función (`func`).
-- Crea una función interna (*envoltura* o *wrapper*) que añade la lógica extra.
-- Devuelve esa función interna.
-
-**Ejemplo sin decorador:**
-```python
-def saludar():
-    print("¡Hola!")
-
-saludar()  # → ¡Hola!
-```
-
-**Ahora con un decorador que añade un mensaje antes y después:**
-
-```python
-def mi_decorador(func):
-    def envoltura():
-        print("1. Algo que se hace ANTES de ejecutar la función.")
-        func()  # Aquí se ejecuta la función original
-        print("2. Algo que se hace DESPUÉS de ejecutar la función.")
-    return envoltura
-
-@mi_decorador
-def saludar():
-    print("¡Hola!")
-
-saludar()    
-
-# Resultado en consola:
-# 1. Algo que se hace ANTES de ejecutar la función.
-# ¡Hola!
-# 2. Algo que se hace DESPUÉS de ejecutar la función.
-```
-
-> 💡**¿Qué es el @?** El `@mi_decorador` es azúcar sintáctica (una forma más bonita de escribir código). Es exactamente lo mismo que escribir de forma manual: `saludar = mi_decorador(saludar)`.
-
-
-## 🚀 ¿Qué pasa si la función original recibe argumentos?
-
-El decorador básico que vimos arriba solo funciona para funciones que no reciben ningún parámetro. Si intentamos decorar una función que recibe un nombre, por ejemplo, `def saludar(nombre):`, Python nos dará un error.
-
-Para que nuestro decorador sea **universal** y sirva para cualquier función, usamos `*args` (para argumentos posicionales) y `**kwargs` (para argumentos con nombre).
-
-Mira cómo cambia el decorador para aceptar parámetros:
-
-```python
-def mi_decorador_universal(func):
-    # Ponemos *args y **kwargs para que la envoltura atrape CUALQUIER argumento
-    def envoltura(*args, **kwargs):
-        print("1. Algo antes...")
-        
-        # Le pasamos esos mismos argumentos a la función original
-        resultado = func(*args, **kwargs)
-        
-        print("2. Algo después...")
-        return resultado # Retornamos el resultado por si la función devuelve algo
-    return envoltura
-
-@mi_decorador_universal
-def saludar_persona(nombre, saludo="¡Hola!"):
-    print(f"   {saludo}, {nombre}. ¿Cómo estás?")
-
-# ¡Ahora funciona perfectamente con argumentos!
-saludar_persona("Carlos", saludo="Buenas tardes")
-
-
-#Resultado en consola
-# 1. Algo antes...
-# Buenas tardes, Carlos. ¿Cómo estás?
-# 2. Algo después...
-```
-
-## ¿Por qué son tan útiles?
-
-Los decoradores son una de las herramientas más potentes de Python. Se usan constantemente para:
-
-- **Autenticación y seguridad:** Verificar si un usuario ha iniciado sesión antes de mostrarle una página web (muy usado en Flask o Django).
-
-- **Logging:** Guardar un registro de qué funciones está tocando un usuario.
-
-- **Caché:** Guardar el resultado de operaciones pesadas para no tener que repetirlas si se piden los mismos datos.
-
-
-![decoradores](img/decoradores.png)
----
