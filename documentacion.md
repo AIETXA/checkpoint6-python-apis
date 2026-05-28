@@ -9,50 +9,89 @@
 
 ## 📄Tabla de contenidos:
 
-[¿Para qué usamos Clases en Python?](#1-clases-en-python)
-[¿Qué método se ejecuta automáticamente cuando se crea una instancia de una clase?](#2-el-método-constructor-`init`)
-[¿Cuáles son los verbos de API?](#3-verbos-de-apis-en-python)
-[¿Es MongoDB una base de datos SQL o NoSQL?](#4-base-de-datos-mongodb)
-[¿Qué es una API?](#5-qué-es-una-api)
-[¿Qué es Postman?](#6-postman-el-laboratorio-de-pruebas-de-apis)
-[¿Qué es el polimorfismo?](#7-qué-es-el-polimorfismo)
-[¿Qué es un método dunder?](#8-métodos-dunder)
-[¿Qué es un decorador de python?](#9-decoradores-en-python)
+[¿Para qué usamos Clases en Python?](#clases-y-objetos-en-python)
+[¿Qué método se ejecuta automáticamente cuando se crea una instancia de una clase?](#el-método-constructor-`init`)
+[¿Qué es el polimorfismo?](#qué-es-el-polimorfismo)
+[¿Qué es un método dunder?](#métodos-dunder)
+[¿Qué es un decorador de python?](#decoradores-en-python)
+[¿Qué es una API?](#qué-es-una-api)
+[¿Cuáles son los verbos de API?](#verbos-de-apis-en-python)
+[¿Qué es Postman?](#postman-el-laboratorio-de-pruebas-de-apis)
+[¿Es MongoDB una base de datos SQL o NoSQL?](#base-de-datos-mongodb)
 
 
+# Introducción a la Programación Orientada a Objetos (POO)
 
-# 1. Clases en Python
+Antes de sumergirnos en el código, es fundamental entender qué sustenta la **Programación Orientada a Objetos**. La POO no es solo una sintaxis de Python, es una forma de **pensar** y **modelar el software** basándose en cuatro pilares fundamentales.
 
-Una clase es una **plantilla o molde** que define cómo se creará un objeto. Permiten empaquetar datos (atributos) y comportamientos (métodos) juntos, lo que facilita la creación de objetos.
+<p align="center">
+  <img src="img/poo.jpg" alt="Los 4 Pilares de la Programación Orientada a Objetos" width="650">
+</p>
 
-## ⚙️ Sintaxis Básica
+Esta infografía resume perfectamente estos conceptos que exploraremos en profundidad:
+
+Fuente: EDteam
+
+---
+
+# Clases y objetos en Python
+
+Una *clase* es una **plantilla o molde** que define cómo se creará un objeto. Permiten empaquetar datos (atributos) y comportamientos (métodos) juntos, facilitando asi la aplicación de pilares de la POO, como la Abstracción y el Encapsulamiento.
+
+## Sintaxis Básica
 
 En Python, defines una clase usando la palabra reservada `class` seguida del nombre en mayúscula (CamelCase) y dos puntos (`:`). Todo lo que pertenece a la clase va indentado (con cuatro espacios) debajo.
 
 ```python
 class NombreClase:
-    #Aquí van los atributos y métodos
+    # Aquí van los atributos y métodos
     pass
 ```
 
-## 🔧 ¿Para qué las usamos?
+## ⚙️ El método constructor `__init__`
 
-Las usamos principalmente para organizar el código y aplicar un concepto llamado Programación Orientada a Objetos (POO). Sus mayores ventajas son:
+El método que se ejecuta automáticamente cuando se crea una instancia de una clase es `__init__` (abreviación de *initialize*, inicializar en español). En el mundo de la programación, a este tipo de funciones especiales se les conoce como constructores.
 
-- **Evitan duplicar código:** Defines el comportamiento una sola vez en la clase y lo reutilizas mil veces.
+Se reconoce porque lleva dos guiones bajos antes y dos después (`__init__`). Esto le indica a Python que es un método especial ("método mágico") con un comportamiento interno propio.
 
-- **Organización:** Juntan los datos (variables) y las acciones (funciones) en un solo lugar lógico.
+Su función principal es:
 
-- **Modelar el mundo real:** Hacen que el código sea más fácil de entender porque programamos pensando en "cosas" (usuarios, productos, enemigos, facturas) en lugar de solo líneas de texto sueltas.
+- **Darle vida al objeto con datos iniciales:** Configura las características únicas de cada instancia en el momento exacto en que nace.
 
-## 📋 Conceptos Claves
+- **Automatizar procesos:** Evita tener que crear el objeto vacío y luego escribir líneas de código extra para asignarle cada dato uno por uno.
 
-- **Constructor (`__init__`):** 
-Es un método especial que se ejecuta automáticamente cuando creas un objeto a partir de la clase. Se utiliza para asignar los valores iniciales a los atributos.
-- **`self`:** 
-Representa la instancia actual de la clase. Es obligatorio incluirlo como el primer parámetro en los métodos para poder acceder a los atributos propios del objeto.
-- **Instancias:**
- Son los objetos individuales creados a partir de la clase. Cada instancia tiene sus propios datos.
+📱 **Analogía de la fábrica:** Imagínate que la clase es el molde para fabricar teléfonos móviles. No queremos que todos los teléfonos salgan de la fábrica vacíos; necesitamos que cada uno tenga su propio número de serie, color y modelo desde el momento en que se fabrican. 
+
+### Ejemplo
+
+```python
+class Movil:
+    def __init__(self, marca, modelo):
+        self.marca = marca
+        self.modelo = modelo
+        print(f"¡Se creó un móvil {self.marca}!")
+
+mi_movil = Movil("Iphone", "12 mini")
+# Se imprime automáticamente: ¡Se creó un móvil Iphone!
+```
+
+> 💡 Nota clave: No necesitas llamar a `__init__` manualmente, Python lo hace solo
+cuando escribes `Movil("Iphone", "12 mini")`.
+
+
+### 💡¿Qué significa `self.marca = marca`?
+
+Piénsalo como una ficha de registro:
+
+- `marca` (derecha) → es el dato que llega desde afuera cuando creas el objeto, como "Iphone".
+- `self.marca` (izquierda) → es donde ese dato queda guardado dentro del objeto para usarlo después.
+
+No tienen que llamarse igual, pero se hace por convención para que quede claro que son el mismo dato.
+
+
+### 🔧 ¿Para qué las usamos?
+
+Las mayores ventajas de usar clases son **organizar las funciones en un solo lugar lógico**, **evitar duplicar código** y **modelar el mundo real**.
 
 **Ejemplo sin clases (desorganizado):**
 ```python
@@ -84,24 +123,15 @@ pickup2 = Pick_up("volkswagen", "amarok")
 pickup1.describir()  # Imprime: Esta pick-up es una toyota hilux.
 pickup2.describir()  # Imprime: Esta pick-up es una volkswagen amarok.
 ```
- 
-![pick-up](img/pick-up.jpg)
+<p align="center">
+  <img src="img/pick-up.jpg" alt="clases y metodo __init__" width="650">
+</p> 
 
 
 Con una clase, puedes crear todas las pick-ups que quieras usando el mismo molde.
 
-**💡 ¿Qué significa `self.marca = marca`?**
-Piénsalo como una ficha de registro:
 
-- `marca` (derecha) → es el dato que llega desde afuera cuando creas el objeto, como "toyota".
-- `self.marca` (izquierda) → es donde ese dato queda guardado dentro del objeto para usarlo después.
-
-No tienen que llamarse igual, pero se hace por convención para que quede claro que son el mismo dato.
-
-![clases](img/clases.jpg)
-
-
-## ⚠️ Errores comunes al usar clases
+### ⚠️ Errores comunes al usar clases
  
 ```python
 class Coche:
@@ -116,55 +146,86 @@ class Coche:
  
 ---
 
-# 2. El método constructor `__init__`
+# ¿Qué es el polimorfismo?
 
-El método que se ejecuta automáticamente cuando se crea una instancia de una clase es `__init__` (abreviación de *initialize*, inicializar en español). En el mundo de la programación, a este tipo de funciones especiales se les conoce como **constructores**.
+El polimorfismo es uno de los pilares fundamentales de la Programación Orientada a Objetos (POO). La palabra viene del griego **poly** (muchos) y **morphé** (formas), y en programación significa la capacidad de que **diferentes clases tengan métodos con el mismo nombre pero con comportamientos distintos**.
 
-## 🔧 ¿Para qué se utiliza?
+En Python, el polimorfismo es especialmente flexible y natural gracias al **Duck Typing** (tipado dinámico), que se resume en la famosa frase: *"Si camina como un pato y grazna como un pato, entonces es un pato"*. A Python no le importa el tipo de objeto que sea, sino lo que ese objeto puede hacer.
 
-Su función principal es inicializar los atributos y preparar el estado inicial del objeto.
+## Formas de aplicar polimorfismo en Python
 
-Imagínate que la clase es el molde para fabricar teléfonos móviles. No queremos que todos los teléfonos salgan de la fábrica vacíos; necesitamos que cada uno tenga su propio número de serie, color y modelo desde el momento en que se fabrican.
+### 1. Con funciones (la más simple) -> distintos objetos, mismo método:
 
-El método `__init__` se utiliza para:
+```python
+class Perro:
+    def sonido(self):
+        return "¡Guau!"
 
-- **Darle vida al objeto con datos iniciales:** Configura las características únicas de cada instancia en el momento exacto en que nace.
+class Gato:
+    def sonido(self):
+        return "¡Miau!"
 
-- **Automatizar procesos:** Evita tener que crear el objeto vacío y luego escribir líneas de código extra para asignarle cada dato uno por uno.
+def hacer_sonido(animal):
+    print(animal.sonido())
 
-## ⚙️ Sintaxis y Estructura
+hacer_sonido(Perro())  # ¡Guau!
+hacer_sonido(Gato())   # ¡Miau!
 
-En Python, este método se reconoce porque lleva dos guiones bajos antes y dos después (`__init__`). Esto le indica a Python que es un método especial ("método mágico") con un comportamiento interno propio.
+```
+> La función `hacer_sonido` no sabe qué animal recibe, simplemente llama a `sonido()`.
+
+### 2. Con herencia -> un padre define el método, los hijos lo sobreescriben:
+
+```python
+class Animal:
+    def sonido(self):
+        return "..."
+
+class Perro(Animal):
+    def sonido(self):
+        return "¡Guau!"
+
+class Gato(Animal):
+    def sonido(self):
+        return "¡Miau!"
+
+```
+> Todos heredan de `Animal`, pero cada uno responde diferente. Esto se llama **sobrescritura de métodos** (*method overriding*).
+
+### 3. Con duck typing -> sin clase padre en común
+
+Python no exige que los objetos compartan una clase padre. Si tiene el método, funciona.
 
 
 ```python
-class NombreClase:
-    def __init__(self, parametro1, parametro2):
-        self.parametro1 = parametro1
-        self.parametro2 = parametro2
+class Robot:
+    def hablar(self):
+        return "Bip bop"
+
+class Persona:
+    def hablar(self):
+        return "Hola!"
+
+# No heredan de nada en común, pero funciona igual
+for obj in [Robot(), Persona()]:
+    print(obj.hablar())
 ```
+> Python no verifica el tipo, solo verifica si el método existe. Eso es **duck typing**.
 
-### Ejemplo
+<p align="center">
+  <img src="img/polimorfismo.png" alt="polimorfismo" width="650">
+</p> 
 
-```python
-class Movil:
-    def __init__(self, marca, modelo):
-        self.marca = marca
-        self.modelo = modelo
-        print(f"¡Se creó un móvil {self.marca}!")
 
-mi_movil = Movil("Iphone", "12 mini")
-# Se imprime automáticamente: ¡Se creó un móvil Iphone!
-```
+## ¿Por qué es útil?
 
-> 💡 Nota clave: No necesitas llamar a `__init__` manualmente, Python lo hace solo
-cuando escribes `Movil("Iphone", "12 mini")`.
+💡**Ventaja clave:** Te permite escribir código más limpio, flexible y mantenible. Si en el futuro decides añadir una clase `Pájaro` con el método `sonido()`, la función `hacer_sonido()` seguirá funcionando perfectamente sin necesidad de modificar una sola línea de su código.
 
 ---
 
-# 3. Verbos de APIs en Python
+# Verbos de APIs en Python
 
-Las APIs REST son fundamentales en el desarrollo de software moderno. Para interactuar con ellas, utilizamos los **verbos HTTP**, que permiten definir el tipo de acción que queremos realizar sobre los recursos de la API.
+Las **APIs REST** son fundamentales en el desarrollo de software moderno. Para interactuar con ellas, utilizamos los **verbos HTTP**, que permiten definir el tipo de acción que queremos realizar sobre los recursos de la API.
 
 ## ¿Qué son los verbos HTTP?
  
@@ -172,8 +233,6 @@ Los verbos HTTP (también llamados métodos HTTP) indican la acción que se dese
 Por ejemplo, en una API que gestiona recetas de cocina, el recurso principal sería:
 
 https://api.ejemplo.com/recetas
-
-
 
 Los verbos HTTP nos permiten:
 
@@ -525,81 +584,7 @@ Si dijimos que una API es el camarero de un restaurante que lleva los pedidos de
 
 ---
 
-# 7. ¿Qué es el polimorfismo?
 
-El polimorfismo es uno de los pilares fundamentales de la Programación Orientada a Objetos (POO). La palabra viene del griego **poly** (muchos) y **morphé** (formas), y en programación significa la capacidad de que **diferentes clases tengan métodos con el mismo nombre pero con comportamientos distintos**.
-
-En Python, el polimorfismo es especialmente flexible y natural gracias al **Duck Typing** (tipado dinámico), que se resume en la famosa frase: *"Si camina como un pato y grazna como un pato, entonces es un pato"*. A Python no le importa el tipo de objeto que sea, sino lo que ese objeto puede hacer.
-
-## Formas de aplicar polimorfismo en Python
-
-### 1. Con funciones (la más simple) -> distintos objetos, mismo método:
-
-```python
-class Perro:
-    def sonido(self):
-        return "¡Guau!"
-
-class Gato:
-    def sonido(self):
-        return "¡Miau!"
-
-def hacer_sonido(animal):
-    print(animal.sonido())
-
-hacer_sonido(Perro())  # ¡Guau!
-hacer_sonido(Gato())   # ¡Miau!
-
-```
-> La función `hacer_sonido` no sabe qué animal recibe, simplemente llama a `sonido()`.
-
-### 2. Con herencia -> un padre define el método, los hijos lo sobreescriben:
-
-```python
-class Animal:
-    def sonido(self):
-        return "..."
-
-class Perro(Animal):
-    def sonido(self):
-        return "¡Guau!"
-
-class Gato(Animal):
-    def sonido(self):
-        return "¡Miau!"
-
-```
-> Todos heredan de `Animal`, pero cada uno responde diferente. Esto se llama **sobrescritura de métodos** (*method overriding*).
-
-### 3. Con duck typing -> sin clase padre en común
-
-Python no exige que los objetos compartan una clase padre. Si tiene el método, funciona.
-
-
-```python
-class Robot:
-    def hablar(self):
-        return "Bip bop"
-
-class Persona:
-    def hablar(self):
-        return "Hola!"
-
-# No heredan de nada en común, pero funciona igual
-for obj in [Robot(), Persona()]:
-    print(obj.hablar())
-```
-> Python no verifica el tipo, solo verifica si el método existe. Eso es **duck typing**.
-
-
-![polimorfismo](img/polimorfismo.png)
-
-
-## ¿Por qué es útil?
-
-💡**Ventaja clave:** Te permite escribir código más limpio, flexible y mantenible. Si en el futuro decides añadir una clase `Pájaro` con el método `sonido()`, la función `hacer_sonido()` seguirá funcionando perfectamente sin necesidad de modificar una sola línea de su código.
-
----
 
 # 8. Métodos dunder
 
@@ -623,7 +608,7 @@ Por ejemplo, cuando haces una suma con el operador +, Python busca el método du
 | `objeto[0]` | `objeto.__getitem__(0)` |
 
 
-![dunder](img/Gemini_Generated_Image_xzidexxzidexxzid.png)
+![dunder](img/dunder.png)
 
 
 
